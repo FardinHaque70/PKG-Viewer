@@ -13,7 +13,7 @@ Exec=pkgviewer
 Type=Application
 Categories=Utility;
 EOF
-cp dist/appimage/pkgviewer.desktop dist/appimage/AppDir/usr/share/applications/
+cp dist/appimage/AppDir/pkgviewer.desktop dist/appimage/AppDir/usr/share/applications/
 curl -L -o dist/appimage/appimagetool.AppImage https://github.com/AppImage/appimagetool/releases/latest/download/appimagetool-x86_64.AppImage
 chmod +x dist/appimage/appimagetool.AppImage
-ARCH=x86_64 dist/appimage/appimagetool.AppImage dist/appimage/AppDir dist/PKGViewer-x86_64.AppImage
+ARCH=x86_64 dist/appimage/appimagetool.AppImage --appimage-extract-and-run dist/appimage/AppDir dist/PKGViewer-x86_64.AppImage
