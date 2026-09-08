@@ -6,10 +6,17 @@ export PYINSTALLER_CONFIG_DIR="${PYINSTALLER_CONFIG_DIR:-$PWD/.pyinstaller}"
 mkdir -p dist/appimage/AppDir/usr/bin dist/appimage/AppDir/usr/share/applications
 cp "dist/PKG Viewer/PKG Viewer" dist/appimage/AppDir/usr/bin/pkgviewer
 chmod +x dist/appimage/AppDir/usr/bin/pkgviewer
+cat > dist/appimage/AppDir/pkgviewer.svg <<'EOF'
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <rect x="8" y="8" width="240" height="240" rx="48" fill="#3d3a53"/>
+  <path d="M64 76h128v24H64zM64 116h128v24H64zM64 156h80v24H64z" fill="#fff"/>
+</svg>
+EOF
 cat > dist/appimage/AppDir/pkgviewer.desktop <<'EOF'
 [Desktop Entry]
 Name=PKG Viewer
 Exec=pkgviewer
+Icon=pkgviewer
 Type=Application
 Categories=Utility;
 EOF
