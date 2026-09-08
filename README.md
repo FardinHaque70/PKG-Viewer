@@ -1,5 +1,7 @@
 # PKG Viewer
 
+> **Upstream attribution:** This project is heavily based on [PS4 PKG Validator](https://github.com/Nigel1992/ps4-pkg-validator) by Nigel1992 and [PS4-pkg-viewer / ps4-pkgtools](https://github.com/Oxwald/PS4-pkg-viewer) by Oxwald. See [`CREDITS.md`](CREDITS.md) for the full attribution and license-preservation notice.
+
 PKG Viewer is a cross-platform desktop application for inspecting PS4 `.pkg` files, reviewing metadata, and checking documented package structure and supported integrity records.
 
 It is developed on macOS first and targets macOS, Windows, and Linux. The interface combines a compact reference-style overview with batch loading, game and package-type grouping, icon preview, validation evidence, entry inspection, report export, and safe extraction of exposed package entries.
@@ -48,7 +50,7 @@ pytest -m real_pkg -q       # requires local samples under pkg/
 
 Local sample packages belong in `pkg/`. That directory is intentionally ignored and is never included in source commits or release artifacts.
 
-## Builds
+## Builds and downloads
 
 Builds use PyInstaller on native operating systems:
 
@@ -58,7 +60,13 @@ Builds use PyInstaller on native operating systems:
 .\build_windows.ps1  # dist/PKG Viewer.exe
 ```
 
-The GitHub Actions workflow builds macOS, Windows, and Linux artifacts from version tags or manual dispatch. macOS is the primary local verification target; Windows and Linux artifacts must be smoke-tested on their native platforms.
+Tagged releases publish ready-to-download artifacts on the repository's GitHub Releases page:
+
+- **macOS:** `PKGViewer.dmg` (open it and drag PKG Viewer to Applications).
+- **Windows:** `PKG Viewer.exe` (portable executable).
+- **Linux:** `PKGViewer-x86_64.AppImage` (make executable, then run it).
+
+Create a version tag such as `v0.1.0` to trigger native builds and publish the release automatically. macOS is the primary local verification target; Windows and Linux artifacts must be smoke-tested on their native platforms.
 
 ## Scope and limitations
 
@@ -66,9 +74,4 @@ PKG Viewer reads documented metadata and exposed package entries. It does not bu
 
 ## Attribution
 
-This project is heavily based on the ideas, workflows, and implementation work in:
-
-- [PS4 PKG Validator](https://github.com/Nigel1992/ps4-pkg-validator) by Nigel1992
-- [PS4-pkg-viewer / ps4-pkgtools](https://github.com/Oxwald/PS4-pkg-viewer) by Oxwald
-
-Their attribution and applicable license notices are preserved in [`CREDITS.md`](CREDITS.md). The project also uses [LibOrbisPkg](https://github.com/maxton/LibOrbisPkg) as a documented format reference.
+The full upstream attribution and applicable license notices are preserved in [`CREDITS.md`](CREDITS.md). The project also uses [LibOrbisPkg](https://github.com/maxton/LibOrbisPkg) as a documented format reference.
