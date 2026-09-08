@@ -1,0 +1,22 @@
+# Local package samples (never commit proprietary or multi-GB PKGs)
+pkg/
+
+# Python environments and generated metadata
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Build and packaging output
+build/
+dist/
+.pyinstaller/
+*.spec.bak
+PKG Viewer.spec
+
+# macOS and editor files
+.DS_Store
+.idea/
+.vscode/

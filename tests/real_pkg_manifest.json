@@ -1,0 +1,41 @@
+[
+  {
+    "path": "pkg/Aragami (PS4)/Aragami.iNTERNAL.PS4-PRELUDE.pkg",
+    "title": "Aragami",
+    "title_id": "CUSA06168",
+    "content_id": "UP1578-CUSA06168_00-0000000000000001",
+    "category": "gd",
+    "type": "Base Game",
+    "region": "US",
+    "app_version": "01.00",
+    "version": "01.00",
+    "firmware": "4.50",
+    "status": "Pass"
+  },
+  {
+    "path": "pkg/Hollow Knight (PS4)/Update 1.02 [CUSA13632][UPD][v01.02]/Hollow Knight - Voidheart Edition [CUSA13632][UPD][v01.02].pkg",
+    "title": "Hollow Knight",
+    "title_id": "CUSA13632",
+    "content_id": "UP1822-CUSA13632_00-HOLLOWKNIGHT18US",
+    "category": "gp",
+    "type": "Update",
+    "region": "US",
+    "app_version": "01.02",
+    "version": "01.00",
+    "firmware": "5.50",
+    "status": "Pass"
+  },
+  {
+    "path": "pkg/Hollow Knight (PS4)/game [CUSA13632][BASE]/Hollow Knight - Voidheart Edition [CUSA13632][BASE].pkg",
+    "title": "Hollow Knight",
+    "title_id": "CUSA13632",
+    "content_id": "UP1822-CUSA13632_00-HOLLOWKNIGHT18US",
+    "category": "gd",
+    "type": "Base Game",
+    "region": "US",
+    "app_version": "01.00",
+    "version": "01.01",
+    "firmware": "5.50",
+    "status": "Pass"
+  }
+]
