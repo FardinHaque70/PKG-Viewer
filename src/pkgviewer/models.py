@@ -132,6 +132,7 @@ class TrophyDocument:
     trophies: list[TrophyEntry] = field(default_factory=list)
     diagnostics: list["Diagnostic"] = field(default_factory=list)
     source_entries: list[int] = field(default_factory=list)
+    icon_count: int = 0
 
 
 @dataclass(frozen=True)

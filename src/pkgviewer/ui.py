@@ -452,7 +452,9 @@ class Window(QMainWindow):
         if not trophy_doc or trophy_doc.availability.value == "Not present":
             trophy_lines = ["No trophy data found."]
         else:
-            trophy_lines = [f"Status: {trophy_doc.availability.value}", f"Trophies: {len(trophy_doc.trophies)}", ""]
+            trophy_lines = [f"Status: {trophy_doc.availability.value}", f"Trophies: {len(trophy_doc.trophies)}", f"Icons available: {trophy_doc.icon_count}", ""]
+            if trophy_doc.availability.value == "Partially readable":
+                trophy_lines.append("Names and descriptions may be encrypted; readable icons are shown when available.\n")
             for trophy in trophy_doc.trophies:
                 if trophy.hidden:
                     trophy_lines.append(f"[{trophy.trophy_type.value}] #{trophy.trophy_id:03d} — Hidden trophy")

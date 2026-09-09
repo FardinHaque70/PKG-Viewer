@@ -18,6 +18,7 @@ class TrophyDecoder:
             return doc
         doc.source_entries = [r[0] for r in records]
         blobs = b"".join(data[:16 * 1024 * 1024] for _, _, data, _ in records)
+        doc.icon_count = blobs.count(b"\x89PNG\r\n\x1a\n")
         if b"ESFM" in blobs or any(b".esfm" in name.lower().encode() for _, name, _, _ in records):
             doc.availability = TrophyAvailability.ENCRYPTED
         xml = blobs.decode("utf-8", errors="ignore")
@@ -35,7 +36,7 @@ class TrophyDecoder:
             doc.trophies.append(TrophyEntry(tid, kind, name, detail, hidden, icon))
         if doc.trophies:
             doc.availability = TrophyAvailability.READABLE if doc.availability != TrophyAvailability.ENCRYPTED else TrophyAvailability.PARTIAL
-        elif doc.availability == TrophyAvailability.NOT_PRESENT:
+        elif (doc.availability == TrophyAvailability.ENCRYPTED and doc.icon_count) or doc.availability == TrophyAvailability.NOT_PRESENT:
             doc.availability = TrophyAvailability.PARTIAL
         return doc
 
