@@ -22,6 +22,7 @@ class TrophyDecoder:
         if b"ESFM" in blobs or any(b".esfm" in name.lower().encode() for _, name, _, _ in records):
             doc.availability = TrophyAvailability.ENCRYPTED
         xml = blobs.decode("utf-8", errors="ignore")
+        icon_ids = [int(value) for value in re.findall(rb"TROP(\d{3})\.PNG", blobs)]
         pattern = re.compile(r"<trophy\b([^>]*)>(.*?)</trophy\s*>", re.IGNORECASE | re.DOTALL)
         for match in pattern.finditer(xml):
             attrs, body = match.groups()
@@ -45,8 +46,9 @@ class TrophyDecoder:
                     break
                 end_marker = blobs.find(b"IEND\xaeB`\x82", start)
                 end = end_marker + 8 if end_marker >= 0 else len(blobs)
-                doc.trophies.append(TrophyEntry(index, TrophyType.UNKNOWN, "", "", False,
-                                                 f"TROP{index:03d}.PNG", blobs[start:end]))
+                trophy_id = icon_ids[index] if index < len(icon_ids) else index
+                doc.trophies.append(TrophyEntry(trophy_id, TrophyType.UNKNOWN, "", "", False,
+                                                 f"TROP{trophy_id:03d}.PNG", blobs[start:end]))
                 start = end
             doc.availability = TrophyAvailability.PARTIAL
         elif (doc.availability == TrophyAvailability.ENCRYPTED and doc.icon_count) or doc.availability == TrophyAvailability.NOT_PRESENT:
