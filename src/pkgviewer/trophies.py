@@ -36,6 +36,19 @@ class TrophyDecoder:
             doc.trophies.append(TrophyEntry(tid, kind, name, detail, hidden, icon))
         if doc.trophies:
             doc.availability = TrophyAvailability.READABLE if doc.availability != TrophyAvailability.ENCRYPTED else TrophyAvailability.PARTIAL
+        elif doc.icon_count:
+            # Plaintext PNG records remain useful even when ESFM text is encrypted.
+            start = 0
+            for index in range(doc.icon_count):
+                start = blobs.find(b"\x89PNG\r\n\x1a\n", start)
+                if start < 0:
+                    break
+                end_marker = blobs.find(b"IEND\xaeB`\x82", start)
+                end = end_marker + 8 if end_marker >= 0 else len(blobs)
+                doc.trophies.append(TrophyEntry(index, TrophyType.UNKNOWN, "", "", False,
+                                                 f"TROP{index:03d}.PNG", blobs[start:end]))
+                start = end
+            doc.availability = TrophyAvailability.PARTIAL
         elif (doc.availability == TrophyAvailability.ENCRYPTED and doc.icon_count) or doc.availability == TrophyAvailability.NOT_PRESENT:
             doc.availability = TrophyAvailability.PARTIAL
         return doc
