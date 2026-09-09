@@ -137,6 +137,9 @@ class Window(QMainWindow):
         self.tabs.addTab(self.tab_with_actions(self.entries, [
             ("Extract selected", self.extract_selected), ("Extract all", self.extract_all),
         ]), "Entries")
+        self.trophies = QTextEdit()
+        self.trophies.setReadOnly(True)
+        self.tabs.addTab(self.trophies, "Trophies")
         self.advanced = QTextEdit()
         self.advanced.setReadOnly(True)
         self.tabs.addTab(self.advanced, "Advanced")
@@ -444,6 +447,19 @@ class Window(QMainWindow):
             self.info.setItem(i, 0, QTableWidgetItem(key))
             self.info.setItem(i, 1, QTableWidgetItem(value))
         self.validation.setPlainText(to_text(report))
+        trophy_lines = []
+        trophy_doc = doc.trophies
+        if not trophy_doc or trophy_doc.availability.value == "Not present":
+            trophy_lines = ["No trophy data found."]
+        else:
+            trophy_lines = [f"Status: {trophy_doc.availability.value}", f"Trophies: {len(trophy_doc.trophies)}", ""]
+            for trophy in trophy_doc.trophies:
+                if trophy.hidden:
+                    trophy_lines.append(f"[{trophy.trophy_type.value}] #{trophy.trophy_id:03d} — Hidden trophy")
+                else:
+                    trophy_lines.append(f"[{trophy.trophy_type.value}] #{trophy.trophy_id:03d} — {trophy.name or 'Unnamed'}")
+                    trophy_lines.append(f"  {trophy.description or 'No description available.'}")
+        self.trophies.setPlainText("\n".join(trophy_lines))
         self.entries.setRowCount(len(doc.entries))
         for i, entry in enumerate(doc.entries):
             for j, value in enumerate((f"0x{entry.entry_id:X}", entry.name or "", hex(entry.offset), str(entry.size), str(entry.encrypted))):
@@ -621,6 +637,7 @@ class Window(QMainWindow):
         self.validation.clear()
         self.entries.setRowCount(0)
         self.advanced.clear()
+        self.trophies.clear()
         self.icon.set_message("Drop a PKG file here")
 
     def clear_items(self):

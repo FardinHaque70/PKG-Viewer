@@ -10,6 +10,22 @@ class Status(str, Enum):
     NOT_CHECKED = "Not checked"
 
 
+class TrophyType(str, Enum):
+    PLATINUM = "Platinum"
+    GOLD = "Gold"
+    SILVER = "Silver"
+    BRONZE = "Bronze"
+    UNKNOWN = "Unknown"
+
+
+class TrophyAvailability(str, Enum):
+    READABLE = "Readable"
+    PARTIAL = "Partially readable"
+    ENCRYPTED = "Encrypted"
+    MALFORMED = "Malformed"
+    NOT_PRESENT = "Not present"
+
+
 PKG_TYPES = {0x40000001: "PS4 Game", 0x40000002: "PS4 Patch", 0x81000001: "PS4 Theme", 1: "PS4 App"}
 CONTENT_TYPES = {0x1A: "Game", 0x1B: "Addon", 0x1C: "License", 0x1E: "Patch"}
 DRM_TYPES = {0: "None", 0xF: "PS4"}
@@ -94,6 +110,28 @@ class PkgDocument:
     general_digests: bytes = b""
     source_identity: tuple[int, ...] | None = None
     icon_data: bytes = b""
+    trophies: "TrophyDocument | None" = None
+
+
+@dataclass(frozen=True)
+class TrophyEntry:
+    trophy_id: int
+    trophy_type: TrophyType
+    name: str = ""
+    description: str = ""
+    hidden: bool = False
+    icon_name: str = ""
+    icon_data: bytes = b""
+    source_entry_id: int | None = None
+    source_offset: int | None = None
+
+
+@dataclass
+class TrophyDocument:
+    availability: TrophyAvailability = TrophyAvailability.NOT_PRESENT
+    trophies: list[TrophyEntry] = field(default_factory=list)
+    diagnostics: list["Diagnostic"] = field(default_factory=list)
+    source_entries: list[int] = field(default_factory=list)
 
 
 @dataclass(frozen=True)

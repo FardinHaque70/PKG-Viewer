@@ -7,6 +7,7 @@ from .binary import BinaryFormatError, BoundedReader
 from .extract import source_identity
 from .models import Diagnostic, PkgDocument, PkgEntry, PkgHeader, Status
 from .sfo import SfoDecoder
+from .trophies import TrophyDecoder
 
 
 class PkgDecoder:
@@ -92,6 +93,11 @@ class PkgDecoder:
         doc.general_digests = metadata(0x80)
         doc.param_sfo_raw = metadata(self.ENTRY_PARAM_SFO)
         doc.icon_data = metadata(self.ENTRY_ICON0)
+        trophy_records = []
+        for entry in doc.entries:
+            if entry.name and "troph" in entry.name.lower() and not entry.encrypted and entry.offset <= size - entry.size and entry.size <= self.MAX_METADATA:
+                trophy_records.append((entry.entry_id, entry.name, bytes(data[entry.offset:entry.offset + entry.size]), entry.offset))
+        doc.trophies = TrophyDecoder().decode(trophy_records)
         if doc.param_sfo_raw:
             doc.sfo = SfoDecoder().decode(doc.param_sfo_raw)
             entry = next(e for e in doc.entries if e.entry_id == self.ENTRY_PARAM_SFO)
