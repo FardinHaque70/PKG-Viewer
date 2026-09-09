@@ -7,6 +7,12 @@ mkdir -p dist/appimage/AppDir/usr/bin dist/appimage/AppDir/usr/share/application
 cp -R "dist/PKG Viewer/." dist/appimage/AppDir/usr/bin/
 mv "dist/appimage/AppDir/usr/bin/PKG Viewer" dist/appimage/AppDir/usr/bin/pkgviewer
 chmod +x dist/appimage/AppDir/usr/bin/pkgviewer
+cat > dist/appimage/AppDir/AppRun <<'EOF'
+#!/bin/sh
+HERE="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+exec "$HERE/usr/bin/pkgviewer" "$@"
+EOF
+chmod +x dist/appimage/AppDir/AppRun
 cat > dist/appimage/AppDir/pkgviewer.svg <<'EOF'
 <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
   <rect x="8" y="8" width="240" height="240" rx="48" fill="#3d3a53"/>
