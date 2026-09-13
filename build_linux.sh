@@ -3,7 +3,7 @@ set -euo pipefail
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 export PYINSTALLER_CONFIG_DIR="${PYINSTALLER_CONFIG_DIR:-$PWD/.pyinstaller}"
 "$PYTHON_BIN" -m PyInstaller --noconfirm --clean --paths src --name "PKG Viewer" src/pkgviewer/launcher.py
-rm -rf dist/appimage dist/PKGViewer-x86_64.AppImage
+rm -rf dist/appimage dist/PKGViewer-Linux-x86_64.AppImage
 mkdir -p dist/appimage/AppDir/usr/bin dist/appimage/AppDir/usr/share/applications
 cp -R "dist/PKG Viewer/." dist/appimage/AppDir/usr/bin/
 mv "dist/appimage/AppDir/usr/bin/PKG Viewer" dist/appimage/AppDir/usr/bin/pkgviewer
@@ -34,4 +34,4 @@ EOF
 cp dist/appimage/AppDir/pkgviewer.desktop dist/appimage/AppDir/usr/share/applications/
 curl -L -o dist/appimage/appimagetool.AppImage https://github.com/AppImage/appimagetool/releases/latest/download/appimagetool-x86_64.AppImage
 chmod +x dist/appimage/appimagetool.AppImage
-ARCH=x86_64 dist/appimage/appimagetool.AppImage --appimage-extract-and-run dist/appimage/AppDir dist/PKGViewer-x86_64.AppImage
+ARCH=x86_64 dist/appimage/appimagetool.AppImage --appimage-extract-and-run dist/appimage/AppDir dist/PKGViewer-Linux-x86_64.AppImage

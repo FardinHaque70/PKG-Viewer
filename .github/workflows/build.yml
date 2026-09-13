@@ -13,10 +13,13 @@ jobs:
         include:
           - os: macos-14
             script: bash build_macos.sh
+            artifact: dist/PKGViewer-macOS.dmg
           - os: windows-2022
             script: powershell -ExecutionPolicy Bypass -File build_windows.ps1
+            artifact: dist/PKGViewer-Windows-x86_64.exe
           - os: ubuntu-22.04
             script: bash build_linux.sh
+            artifact: dist/PKGViewer-Linux-x86_64.AppImage
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -29,10 +32,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: pkgviewer-${{ matrix.os }}
-          path: |
-            dist/*.dmg
-            dist/*.AppImage
-            dist/*.exe
+          path: ${{ matrix.artifact }}
           if-no-files-found: error
 
   release:

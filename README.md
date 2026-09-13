@@ -55,16 +55,16 @@ Local sample packages belong in `pkg/`. That directory is intentionally ignored 
 Builds use PyInstaller on native operating systems:
 
 ```bash
-./build_macos.sh       # dist/PKGViewer.dmg and PKG Viewer.app
-./build_linux.sh       # dist/PKGViewer-x86_64.AppImage
-.\build_windows.ps1  # dist/PKG Viewer.exe
+./build_macos.sh       # dist/PKGViewer-macOS.dmg and PKG Viewer.app
+./build_linux.sh       # dist/PKGViewer-Linux-x86_64.AppImage
+.\build_windows.ps1  # dist/PKGViewer-Windows-x86_64.exe
 ```
 
 Tagged releases publish ready-to-download artifacts on the repository's GitHub Releases page:
 
-- **macOS:** `PKGViewer.dmg` (open it and drag PKG Viewer to Applications).
-- **Windows:** `PKG Viewer.exe` (portable executable).
-- **Linux:** `PKGViewer-x86_64.AppImage` (make executable, then run it).
+- **macOS:** `PKGViewer-macOS.dmg` (open it and drag PKG Viewer to Applications).
+- **Windows:** `PKGViewer-Windows-x86_64.exe` (portable executable).
+- **Linux:** `PKGViewer-Linux-x86_64.AppImage` (make executable, then run it).
 
 Create a version tag such as `v0.1.0` to trigger native builds and publish the release automatically. macOS is the primary local verification target; Windows and Linux artifacts must be smoke-tested on their native platforms.
 
